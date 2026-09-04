@@ -9,7 +9,7 @@ const vitalLogSchema = new mongoose.Schema(
     temperature: { type: Number, required: true },
   },
   {
-    // Native MongoDB Time-Series Configuration
+    // Native MongoDB Time-Series setup
     timeseries: {
       timeField: 'timestamp',
       metaField: 'bedId',

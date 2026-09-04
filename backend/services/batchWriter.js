@@ -3,7 +3,7 @@ const VitalLog = require('../models/VitalLog');
 let telemetryBuffer = [];
 const BATCH_INTERVAL_MS = 3000; // Flush to DB every 3 seconds
 
-// Push packet to RAM queue
+// Push incoming payload to RAM array
 const queueTelemetry = (data) => {
   telemetryBuffer.push({
     timestamp: new Date(data.timestamp),
@@ -20,7 +20,7 @@ const startBatchProcessor = () => {
     if (telemetryBuffer.length === 0) return;
 
     const batchToInsert = [...telemetryBuffer];
-    telemetryBuffer = []; // Instantly reset buffer
+    telemetryBuffer = []; // Reset RAM queue immediately
 
     try {
       await VitalLog.insertMany(batchToInsert, { ordered: false });
